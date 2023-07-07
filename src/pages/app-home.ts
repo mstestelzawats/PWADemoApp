@@ -1,5 +1,6 @@
 import { LitElement, css, html } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
+import { DigitalGoodsPurchase, DigitalGoodsConfirmPurchase, DigitalGoodsGetDetails, changecontent } from "../functions/DigitalGoods.js"
 
 import '@shoelace-style/shoelace/dist/components/card/card.js';
 import '@shoelace-style/shoelace/dist/components/button/button.js';
@@ -81,57 +82,11 @@ export class AppHome extends LitElement {
       <app-header></app-header>
 
       <main>
-        <div id="welcomeBar">
-          <sl-card id="welcomeCard">
-            <div slot="header">
-              <h2>${this.message}</h2>
-            </div>
-
-            <p>
-              For more information on the PWABuilder pwa-starter, check out the
-              <a href="https://docs.pwabuilder.com/#/starter/quick-start">
-                documentation</a>.
-            </p>
-
-            <p id="mainInfo">
-              Welcome to the
-              <a href="https://pwabuilder.com">PWABuilder</a>
-              pwa-starter! Be sure to head back to
-              <a href="https://pwabuilder.com">PWABuilder</a>
-              when you are ready to ship this PWA to the Microsoft Store, Google Play
-              and the Apple App Store!
-            </p>
-
-            ${'share' in navigator
-              ? html`<sl-button slot="footer" variant="primary" @click="${this.share}">Share this Starter!</sl-button>`
-              : null}
-          </sl-card>
-
-          <sl-card id="infoCard">
-            <h2>Technology Used</h2>
-
-            <ul>
-              <li>
-                <a href="https://www.typescriptlang.org/">TypeScript</a>
-              </li>
-
-              <li>
-                <a href="https://lit.dev">lit</a>
-              </li>
-
-              <li>
-                <a href="https://shoelace.style/">Shoelace</a>
-              </li>
-
-              <li>
-                <a href="https://github.com/thepassle/app-tools/blob/master/router/README.md"
-                  >App Tools Router</a>
-              </li>
-            </ul>
-          </sl-card>
-
-          <sl-button href="${(import.meta as any).env.BASE_URL}about" variant="primary">Navigate to About</sl-button>
-        </div>
+        <p class="page-header">COINS!</p>
+            <div><span id="spanthingy">initial content</span></div>
+            <fluent-button class="line-item" @click="${() => {changecontent();}}" appearance="accent">Details</fluent-button>
+            <fluent-accent class="line-item" appearance="accent">${DigitalGoodsGetDetails()}</fluent-button>
+            <fluent-text-field class="line-item" placeholder="Store Id to purchase"></fluent-text-field>
       </main>
     `;
   }
