@@ -17,6 +17,7 @@
       "forceConsistentCasingInFileNames": true,
       "useDefineForClassFields": false,
       "isolatedModules": true,
+      "allowJs": true,
       "types": [
           "vite-plugin-pwa/client",
           "vite/client"

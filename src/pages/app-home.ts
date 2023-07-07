@@ -1,6 +1,6 @@
 import { LitElement, css, html } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
-import { DigitalGoodsPurchase, DigitalGoodsConfirmPurchase, DigitalGoodsGetDetails, changecontent } from "../functions/DigitalGoods.js"
+import { DigitalGoodsPurchase, DigitalGoodsConfirmPurchase, DigitalGoodsGetDetails, changecontent } from "../functions/DigitalGoods.js";
 
 import '@shoelace-style/shoelace/dist/components/card/card.js';
 import '@shoelace-style/shoelace/dist/components/button/button.js';
