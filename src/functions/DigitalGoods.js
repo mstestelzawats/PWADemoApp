@@ -42,11 +42,10 @@ export function DigitalGoodsConfirmPurchase() {
 var value = 'TESTING';
 
 export function DigitalGoodsGetDetails() {
-    return value;
     if (window.getDigitalGoodsService === undefined) {
         // Digital Goods API is not supported in this context.
         alert("getDigitalGoodsService is undefined");
-        return;
+        return "no dg";
     }
     try {
         alert("getDigitalGoodsService is defined, getting details");
@@ -59,11 +58,14 @@ export function DigitalGoodsGetDetails() {
                 {style: 'currency', currency: item.price.currency}
               ).format(item.price.value);
             alert(priceStr);
-            AddShopMenuItem(item.itemId, item.title, priceStr, item.description);
+            alert(item.itemId);
+            alert(item.title);
+            alert(item.description);
         }
+        return "dg!";
     } catch (error) {
         console.error("Failed to get service:", error.message);
-        return;
+        return "dg error";
     }
 }
 

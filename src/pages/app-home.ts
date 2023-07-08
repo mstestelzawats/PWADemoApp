@@ -1,6 +1,6 @@
 import { LitElement, css, html } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
-import { DigitalGoodsGetDetails } from "../functions/DigitalGoods.js";
+import { DigitalGoodsGetDetails, changecontent } from "../functions/DigitalGoods.js";
 
 import '@shoelace-style/shoelace/dist/components/card/card.js';
 import '@shoelace-style/shoelace/dist/components/button/button.js';
@@ -88,8 +88,8 @@ export class AppHome extends LitElement {
     </script>
     </header>
     <body>
-    <input type="button" name="test" value="change content" onclick="changecontent();">
-    <div class="line-item" appearance="accent">${DigitalGoodsGetDetails()}</div>
+    <fluent-button class="line-item" @click="${() => {changecontent();}}" appearance="accent">Details</fluent-button>
+    <fluent-accent class="line-item" appearance="accent">${DigitalGoodsGetDetails()}</fluent-button>
     <div style="height:20px"></div>
     <div><span id="spanthingy">initial content</span></div>
     </body>
