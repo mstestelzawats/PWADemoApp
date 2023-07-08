@@ -120,7 +120,7 @@ export class AppHome extends LitElement {
     </header>
     <body>
     <input type="button" name="test" value="change content" onclick="changecontent();">
-    <fluent-accent class="line-item" appearance="accent">${DigitalGoodsGetDetails()}</fluent-button>
+    <div class="line-item" appearance="accent">${DigitalGoodsGetDetails()}</div>
     <div style="height:20px"></div>
     <div><span id="spanthingy">initial content</span></div>
     </body>
