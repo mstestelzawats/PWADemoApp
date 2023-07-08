@@ -7,6 +7,37 @@ import '@shoelace-style/shoelace/dist/components/button/button.js';
 
 import { styles } from '../styles/shared-styles';
 
+var value = 'TESTING';
+
+export function DigitalGoodsGetDetails() {
+    //return value;
+    if (window.getDigitalGoodsService === undefined) {
+        // Digital Goods API is not supported in this context.
+        alert("getDigitalGoodsService is undefined");
+        return "no dg";
+    }
+    try {
+        alert("getDigitalGoodsService is defined, getting details");
+        const service = window.getDigitalGoodsService('https://store.microsoft.com/billing');
+        const details = digitalGoodsService.getDetails(['SCCPWATestAppSubscription1', 'Coins', 'RemoveAds']);
+        for (item of details) {
+            alert(p.itemId);
+            const priceStr = new Intl.NumberFormat(
+                locale,
+                {style: 'currency', currency: item.price.currency}
+              ).format(item.price.value);
+            alert(priceStr);
+            alert(item.itemId);
+            alert(item.title);
+            alert(item.description);
+        }
+        return "dg!";
+    } catch (error) {
+        console.error("Failed to get service:", error.message);
+        return "error :(";
+    }
+}
+
 @customElement('app-home')
 export class AppHome extends LitElement {
 
@@ -89,6 +120,7 @@ export class AppHome extends LitElement {
     </header>
     <body>
     <input type="button" name="test" value="change content" onclick="changecontent();">
+    <fluent-accent class="line-item" appearance="accent">${DigitalGoodsGetDetails()}</fluent-button>
     <div style="height:20px"></div>
     <div><span id="spanthingy">initial content</span></div>
     </body>
