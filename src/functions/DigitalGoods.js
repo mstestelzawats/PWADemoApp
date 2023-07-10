@@ -1,4 +1,4 @@
-export async function DigitalGoodsPurchase() {
+export async function DigitalGoodsPurchase(IAPToken) {
     if (window.getDigitalGoodsService === undefined) {
         // Digital Goods API is not supported in this context.
         alert("getDigitalGoodsService is undefined");
@@ -7,7 +7,7 @@ export async function DigitalGoodsPurchase() {
     try {
         alert("getDigitalGoodsService is defined, attempting purchase");
         const service = await window.getDigitalGoodsService('https://store.microsoft.com/billing');
-        const items = await service.getDetails(['SCCPWATestAppConsumable3']);
+        const items = await service.getDetails([IAPToken]);
         const request = new PaymentRequest([{
             supportedMethods: 'https://store.microsoft.com/billing',
             data: { itemId: items[0].itemId },
@@ -19,7 +19,7 @@ export async function DigitalGoodsPurchase() {
     }
 }
 
-export function DigitalGoodsConfirmPurchase() {
+export function DigitalGoodsConfirmPurchases() {
     if (window.getDigitalGoodsService === undefined) {
         // Digital Goods API is not supported in this context.
         alert("getDigitalGoodsService is undefined");
@@ -48,7 +48,7 @@ export async function DigitalGoodsGetDetails() {
         return "no dg";
     }
     try {
-        alert("getDigitalGoodsService is defined, getting details");
+        //alert("getDigitalGoodsService is defined, getting details");
         const service = await window.getDigitalGoodsService('https://store.microsoft.com/billing');
         const details = await service.getDetails(['SCCPWATestAppSubscription1', 'Coins', 'RemoveAds']);
         for (item of details) {
@@ -72,4 +72,82 @@ export async function DigitalGoodsGetDetails() {
 export function changecontent()
 {
     alert("IN FUN");
+}
+
+// Code to support purchase of 'SCCPWATestAppSubscription1' subscription
+
+var ameatureTitle = "Amateur";
+var ameatureMessage = "You are an amateur! Step up your game!";
+var proTitle = "Pro";
+var proMessage = "You are a pro! Incredible! Undeniable! Amazing!";
+var pro = false;
+
+export function GetStatus()
+{
+    if(pro)
+    {
+        return proTitle;
+    }
+    return ameatureTitle;
+}
+
+export function GetStatusMessage()
+{
+    if(pro)
+    {
+        return proMessage;
+    }
+    return ameatureMessage;
+}
+
+// Code to support purchase of 'Coins' consumable
+
+var poorTitle = "You are Coinless...";
+var poorMessage = "You have no coins to use! Get some!";
+var richTitle = "You've got coins";
+var richMessage = "Look at you, moneybags! Use your coins!";
+var coin = false;
+
+export function GetCoin()
+{
+    if(coin)
+    {
+        return richTitle;
+    }
+    return poorTitle;
+}
+
+export function GetCoinMessage()
+{
+    if(coin)
+    {
+        return richMessage;
+    }
+    return poorMessage;
+}
+
+// Code to support purchase of 'RemoveAds' durable
+
+var adTitle = "BANNER AD BANNER AD BANNER AD BANNER AD BANNER AD BANNER AD BANNER AD BANNER AD";
+var adMessage = "Hate this annoying ad? Remove it!";
+var noAdTitle = "";
+var noAdMessage = "Thanks for removing that annoying ad! So much better :)";
+var ads = true;
+
+export function GetAd()
+{
+    if(ads)
+    {
+        return adTitle;
+    }
+    return noAdTitle;
+}
+
+export function GetAdMessage()
+{
+    if(ads)
+    {
+        return adMessage;
+    }
+    return noAdMessage;
 }
