@@ -1,4 +1,4 @@
-export async function DigitalGoodsPurchase(IAPToken) {
+async function DigitalGoodsPurchase(IAPToken) {
     if (window.getDigitalGoodsService === undefined) {
         // Digital Goods API is not supported in this context.
         alert("getDigitalGoodsService is undefined");
@@ -39,8 +39,6 @@ export function DigitalGoodsConfirmPurchases() {
     }
 }
 
-var value = 'TESTING';
-
 export async function DigitalGoodsGetDetails() {
     if (window.getDigitalGoodsService === undefined) {
         // Digital Goods API is not supported in this context.
@@ -49,8 +47,8 @@ export async function DigitalGoodsGetDetails() {
     }
     try {
         //alert("getDigitalGoodsService is defined, getting details");
-        const service = await window.getDigitalGoodsService('https://store.microsoft.com/billing');
-        const details = await service.getDetails(['SCCPWATestAppSubscription1', 'Coins', 'RemoveAds']);
+        const service = await window.getDigitalGoodsService("https://store.microsoft.com/billing");
+        const details = await service.getDetails(["SCCPWATestAppSubscription1", "Coins", "RemoveAds"]);
         for (item of details) {
             alert(p.itemId);
             const priceStr = new Intl.NumberFormat(
@@ -67,11 +65,6 @@ export async function DigitalGoodsGetDetails() {
         console.error("Failed to get service:", error.message);
         return "dg error";
     }
-}
-
-export function changecontent()
-{
-    alert("IN FUN");
 }
 
 // Code to support purchase of 'SCCPWATestAppSubscription1' subscription
@@ -100,6 +93,12 @@ export function GetStatusMessage()
     return ameatureMessage;
 }
 
+export function BuyPro()
+{
+    alert("buying pro");
+    DigitalGoodsPurchase("SCCPWATestAppSubscription1");
+}
+
 // Code to support purchase of 'Coins' consumable
 
 var poorTitle = "You are Coinless...";
@@ -126,9 +125,20 @@ export function GetCoinMessage()
     return poorMessage;
 }
 
+export function BuyCoins()
+{
+    alert("buying coins");
+    DigitalGoodsPurchase("Coins");
+}
+
+export function UseCoins()
+{
+    alert("using coins");
+}
+
 // Code to support purchase of 'RemoveAds' durable
 
-var adTitle = "BANNER AD BANNER AD BANNER AD BANNER AD BANNER AD BANNER AD BANNER AD BANNER AD";
+var adTitle = "BANNER AD BANNER AD BANNER AD";
 var adMessage = "Hate this annoying ad? Remove it!";
 var noAdTitle = "";
 var noAdMessage = "Thanks for removing that annoying ad! So much better :)";
@@ -150,4 +160,10 @@ export function GetAdMessage()
         return adMessage;
     }
     return noAdMessage;
+}
+
+export function RemoveAds()
+{
+    alert("Remove Ads");
+    DigitalGoodsPurchase("RemoveAds");
 }

@@ -1,6 +1,6 @@
 import { LitElement, css, html } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
-import { DigitalGoodsGetDetails, GetStatus, GetStatusMessage, GetCoin, GetCoinMessage, GetAd, GetAdMessage, changecontent } from "../functions/DigitalGoods.js";
+import { DigitalGoodsGetDetails, GetStatus, GetStatusMessage, BuyPro, GetCoin, GetCoinMessage, BuyCoins, UseCoins, GetAd, GetAdMessage, RemoveAds } from "../functions/DigitalGoods.js";
 
 import '@shoelace-style/shoelace/dist/components/card/card.js';
 import '@shoelace-style/shoelace/dist/components/button/button.js';
@@ -112,7 +112,11 @@ export class AppHome extends LitElement {
       margin: -40px 0px;
     }
     div.item{
+      display: inline-block;
+    }
+    div.parent{
       margin: 0px 15px;
+      white-space: nowrap;
     }
     button.primary{
       background-color: dodgerblue;
@@ -127,23 +131,47 @@ export class AppHome extends LitElement {
       -moz-border-radius: 15px
     }
     </style>
-    <div class="item">
-    <h2>${GetStatus()}</h2>
-    <p>${GetStatusMessage()}</p>
-    <button type="button" class="primary">Buy Pro</button>
-    <h2>${GetCoin()}</h2>
-    <p>${GetCoinMessage()}</p>
-    <button type="button" class="primary">Buy Coins</button>
-    <button type="button" class="secondary">Use Coins</button>
-    <h2>Products to Buy:</h2>
-    <fluent-button class="line-item" @click="${() => {changecontent();}}" appearance="accent">experiment</fluent-button>
-    <fluent-accent class="line-item" appearance="accent">${DigitalGoodsGetDetails()}</fluent-button>
+
+    <div class="parent">
+      <h2>${GetStatus()}</h2>
+      <div class="item">
+        <p>${GetStatusMessage()}</p>
+      </div>
+      <div class="item">
+        <button type="button" class="primary" @click="${() => {BuyPro();}}">Buy Pro</button>
+      </div>
     </div>
+
+    <div class="parent">
+      <h2>${GetCoin()}</h2>
+      <div class="item">
+        <p>${GetCoinMessage()}</p>
+      </div>
+      <div class="item">
+        <button type="button" class="primary" @click="${() => {BuyCoins();}}">Buy Coins</button>
+      </div>
+      <div class="item">
+        <button type="button" class="secondary" @click="${() => {UseCoins();}}">Use Coins</button>
+      </div>
+    </div>
+
+    <div class="parent">
+      <h2>Products to Buy:</h2>
+      <fluent-accent class="line-item" appearance="accent">${DigitalGoodsGetDetails()}</fluent-button>
+    </div>
+
     <div class="ad">
-    <p>${GetAd()}</p>
+      <p>${GetAd()}</p>
     </div>
-    <p>${GetAdMessage()}</p>
-    <button type="button" class="primary">Remove Ads</button>
+
+    <div class="parent">
+      <div class="item">
+        <p>${GetAdMessage()}</p>
+      </div>
+      <div class="item">
+        <button type="button" class="primary" @click="${() => {RemoveAds();}}">Remove Ads</button>
+      </div>
+    </div>
     <p></p>
     </body>
     `;
