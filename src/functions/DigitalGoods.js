@@ -50,7 +50,7 @@ export function DigitalGoodsGetDetails() {
     try {
         alert("getDigitalGoodsService is defined, getting details");
         const service = window.getDigitalGoodsService('https://store.microsoft.com/billing');
-        const details = digitalGoodsService.getDetails(['SCCPWATestAppSubscription1', 'Coins', 'RemoveAds']);
+        const details = service.getDetails(['SCCPWATestAppSubscription1', 'Coins', 'RemoveAds']);
         for (item of details) {
             alert(p.itemId);
             const priceStr = new Intl.NumberFormat(
