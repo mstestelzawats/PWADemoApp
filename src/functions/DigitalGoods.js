@@ -41,7 +41,7 @@ export function DigitalGoodsConfirmPurchase() {
 
 var value = 'TESTING';
 
-export function DigitalGoodsGetDetails() {
+export async function DigitalGoodsGetDetails() {
     if (window.getDigitalGoodsService === undefined) {
         // Digital Goods API is not supported in this context.
         alert("getDigitalGoodsService is undefined");
@@ -49,8 +49,8 @@ export function DigitalGoodsGetDetails() {
     }
     try {
         alert("getDigitalGoodsService is defined, getting details");
-        const service = window.getDigitalGoodsService('https://store.microsoft.com/billing');
-        const details = service.getDetails(['SCCPWATestAppSubscription1', 'Coins', 'RemoveAds']);
+        const service = await window.getDigitalGoodsService('https://store.microsoft.com/billing');
+        const details = await service.getDetails(['SCCPWATestAppSubscription1', 'Coins', 'RemoveAds']);
         for (item of details) {
             alert(p.itemId);
             const priceStr = new Intl.NumberFormat(
