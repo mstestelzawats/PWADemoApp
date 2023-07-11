@@ -50,12 +50,6 @@ export async function DigitalGoodsGetDetails() {
         const service = await window.getDigitalGoodsService("https://store.microsoft.com/billing");
         const details = await service.getDetails(["SCCPWATestAppSubscription1", "Coins", "RemoveAds"]);
         for (item of details) {
-            alert(p.itemId);
-            const priceStr = new Intl.NumberFormat(
-                locale,
-                {style: 'currency', currency: item.price.currency}
-              ).format(item.price.value);
-            alert(priceStr);
             alert(item.itemId);
             alert(item.title);
             alert(item.description);
