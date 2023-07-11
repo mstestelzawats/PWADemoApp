@@ -1,6 +1,12 @@
 var service;
 
-async function GetService()
+export async function GetService()
+{
+    InitializeService();
+    return service;
+}
+
+async function InitializeService()
 {
     var counter = 0;
     do {
@@ -27,7 +33,7 @@ async function GetService()
 
 async function DigitalGoodsPurchase(IAPToken) {
     try {
-        GetService();
+        InitializeService();
         const items = await service.getDetails([IAPToken]);
         const request = new PaymentRequest([{
             supportedMethods: 'https://store.microsoft.com/billing',
@@ -35,28 +41,27 @@ async function DigitalGoodsPurchase(IAPToken) {
         }]);
         const response = await request.show();
     } catch (error) {
-        console.error("Failed to get service:", error.message);
+        console.error("Error:", error.message);
         return;
     }
 }
 
 export function DigitalGoodsConfirmPurchases() {
     try {
-        GetService();
+        InitializeService();
         purchases = service.listPurchases();
         for (p of purchases) {
             alert(p.itemId);
-            VerifyOnBackendAndGrantEntitlement(p.itemId, p.purchaseToken);
         }
     } catch (error) {
-        console.error("Failed to get service:", error.message);
+        console.error("Error:", error.message);
         return;
     }
 }
 
 export async function DigitalGoodsGetDetails() {
     try {
-        GetService();
+        InitializeService();
         const details = await service.getDetails(["SCCPWATestAppSubscription1", "Coins", "RemoveAds"]);
         for (item of details) {
             alert(item.itemId);
@@ -65,7 +70,7 @@ export async function DigitalGoodsGetDetails() {
         }
         return "dg!";
     } catch (error) {
-        console.error("Failed to get service:", error.message);
+        console.error("Error:", error.message);
         return "dg error";
     }
 }
