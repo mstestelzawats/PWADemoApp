@@ -1,6 +1,6 @@
 import { LitElement, css, html } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
-import { DigitalGoodsGetDetails, GetStatus, GetStatusMessage, BuyPro, GetCoin, GetCoinMessage, BuyCoins, UseCoins, GetAd, GetAdMessage, RemoveAds } from "../functions/DigitalGoods.js";
+import { GetStatus, GetStatusMessage, BuyPro, GetCoin, GetCoinMessage, BuyCoins, UseCoins, GetAd, GetAdMessage, RemoveAds } from "../functions/DigitalGoods.js";
 
 import '@shoelace-style/shoelace/dist/components/card/card.js';
 import '@shoelace-style/shoelace/dist/components/button/button.js';
@@ -157,7 +157,6 @@ export class AppHome extends LitElement {
 
     <div class="parent">
       <h2>Products to Buy:</h2>
-      <fluent-accent class="line-item" appearance="accent">${DigitalGoodsGetDetails()}</fluent-button>
     </div>
 
     <div class="ad">
