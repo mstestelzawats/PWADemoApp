@@ -152,9 +152,9 @@ export function GetCoinMessage()
     return poorMessage;
 }
 
-export function BuyCoins()
+export async function BuyCoins()
 {
-    DigitalGoodsPurchase("Coins");
+    await DigitalGoodsPurchase("Coins");
     window.location.reload();
 }
 
