@@ -1,39 +1,44 @@
-var service;
+// var service;
 
-export async function GetService()
-{
-    InitializeService();
-    return service;
-}
+// export async function GetService()
+// {
+//     InitializeService();
+//     return service;
+// }
 
-async function InitializeService()
-{
-    var counter = 0;
-    do {
-        alert("entering loop");
-        counter++;
-        if (service !== undefined)
-        {
-            alert("service defined");
-            return;
-        }
-        if (window.getDigitalGoodsService === undefined) {
-            // Digital Goods API is not supported in this context.
-            alert("getDigitalGoodsService is undefined");
-            return;
-        }
-        try {
-            alert("getDigitalGoodsService is defined, trying to get service");
-            service = await window.getDigitalGoodsService('https://store.microsoft.com/billing');
-        } catch (error) {
-            console.error("Failed to get service:", error.message);
-        }
-    } while (service === undefined && counter < 5)
-}
+// async function InitializeService()
+// {
+//     var counter = 0;
+//     do {
+//         alert("entering loop");
+//         counter++;
+//         if (service !== undefined)
+//         {
+//             alert("service defined");
+//             return;
+//         }
+//         if (window.getDigitalGoodsService === undefined) {
+//             // Digital Goods API is not supported in this context.
+//             alert("getDigitalGoodsService is undefined");
+//             return;
+//         }
+//         try {
+//             alert("getDigitalGoodsService is defined, trying to get service");
+//             service = await window.getDigitalGoodsService('https://store.microsoft.com/billing');
+//         } catch (error) {
+//             console.error("Failed to get service:", error.message);
+//         }
+//     } while (service === undefined && counter < 5)
+// }
 
-async function DigitalGoodsPurchase(IAPToken) {
+export async function DigitalGoodsPurchase(IAPToken) {
+    if (window.getDigitalGoodsService === undefined) {
+        // Digital Goods API is not supported in this context.
+        alert("getDigitalGoodsService is undefined");
+        return;
+    }
     try {
-        InitializeService();
+        const service = await window.getDigitalGoodsService('https://store.microsoft.com/billing');
         const items = await service.getDetails([IAPToken]);
         const request = new PaymentRequest([{
             supportedMethods: 'https://store.microsoft.com/billing',
@@ -46,10 +51,15 @@ async function DigitalGoodsPurchase(IAPToken) {
     }
 }
 
-export function DigitalGoodsConfirmPurchases() {
+export async function DigitalGoodsConfirmPurchases() {
+    if (window.getDigitalGoodsService === undefined) {
+        // Digital Goods API is not supported in this context.
+        alert("getDigitalGoodsService is undefined");
+        return;
+    }
     try {
-        InitializeService();
-        purchases = service.listPurchases();
+        const service = await window.getDigitalGoodsService('https://store.microsoft.com/billing');
+        purchases = await service.listPurchases();
         for (p of purchases) {
             alert(p.itemId);
         }
@@ -60,8 +70,13 @@ export function DigitalGoodsConfirmPurchases() {
 }
 
 export async function DigitalGoodsGetDetails() {
+    if (window.getDigitalGoodsService === undefined) {
+        // Digital Goods API is not supported in this context.
+        alert("getDigitalGoodsService is undefined");
+        return;
+    }
     try {
-        InitializeService();
+        const service = await window.getDigitalGoodsService('https://store.microsoft.com/billing');
         const details = await service.getDetails(["SCCPWATestAppSubscription1", "Coins", "RemoveAds"]);
         for (item of details) {
             alert(item.itemId);
@@ -101,10 +116,10 @@ export function GetStatusMessage()
     return ameatureMessage;
 }
 
-export function BuyPro()
+export async function BuyPro()
 {
     alert("buying pro");
-    DigitalGoodsPurchase("SCCPWATestAppSubscription1");
+    await DigitalGoodsPurchase("SCCPWATestAppSubscription1");
 }
 
 // Code to support purchase of 'Coins' consumable
