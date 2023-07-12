@@ -104,7 +104,6 @@ var pro = await DigitalGoodsConfirmPurchase("RemoveAds");
 
 export function GetStatus()
 {
-    alert(pro);
     if(pro)
     {
         return proTitle;
@@ -176,7 +175,7 @@ export async function UseCoins()
             alert(p.itemId);
             if(p.itemId === "Coins")
             {
-                await service.consume("Coins");
+                service.consume("Coins");
                 alert("PLUS FIVE COINS");
                 window.location.reload();
                 return;
