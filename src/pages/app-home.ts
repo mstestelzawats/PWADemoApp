@@ -158,10 +158,10 @@ export class AppHome extends LitElement {
     <div class="parent">
       <h2>Products to Buy:</h2>
       <div class="item">
-        <button type="button" class="primary" @click="${() => {DigitalGoodsGetDetails();}}">Get Details</button>
+        <button type="button" class="primary" @click="${async () => {await DigitalGoodsGetDetails();}}">Get Details</button>
       </dev>
       <div class="item">
-        <button type="button" class="primary" @click="${() => {DigitalGoodsConfirmPurchases();}}">List Purchases</button>
+        <button type="button" class="primary" @click="${async () => {await DigitalGoodsConfirmPurchases();}}">List Purchases</button>
       </dev>
     </div>
 
