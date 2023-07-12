@@ -163,8 +163,6 @@ export function BuyCoins()
 
 export async function UseCoins()
 {
-    coinCount = coinCount + 5;
-    alert(coinCount);
     alert("using coins");
     if (window.getDigitalGoodsService === undefined) {
         // Digital Goods API is not supported in this context.
@@ -175,11 +173,10 @@ export async function UseCoins()
         const service = await window.getDigitalGoodsService('https://store.microsoft.com/billing');
         const purchases = await service.listPurchases();
         for (const p of purchases) {
-            aleart(p.itemId);
+            alert(p.itemId);
             if(p.itemId === "Coins")
             {
-                coinCount = coinCount + 5;
-                service.consume("Coins");
+                await service.consume("Coins");
                 alert("PLUS FIVE COINS");
                 window.location.reload();
                 return;
