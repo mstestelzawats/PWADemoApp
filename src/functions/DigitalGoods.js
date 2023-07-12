@@ -210,8 +210,8 @@ export function GetAdMessage()
     return noAdMessage;
 }
 
-export function RemoveAds()
+export async function RemoveAds()
 {
-    DigitalGoodsPurchase("RemoveAds");
-    //window.location.reload();
+    await DigitalGoodsPurchase("RemoveAds");
+    window.location.reload();
 }
