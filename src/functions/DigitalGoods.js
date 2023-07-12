@@ -190,7 +190,7 @@ var adTitle = "BANNER AD BANNER AD BANNER AD";
 var adMessage = "Hate this annoying ad? Remove it!";
 var noAdTitle = "";
 var noAdMessage = "Thanks for removing that annoying ad! So much better :)";
-var ads = await DigitalGoodsConfirmPurchase("SCCPWATestAppSubscription1");
+var ads = await DigitalGoodsConfirmPurchase("RemoveAds");
 
 export function GetAd()
 {
