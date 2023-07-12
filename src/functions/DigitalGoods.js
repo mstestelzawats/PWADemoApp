@@ -43,9 +43,9 @@ export async function DigitalGoodsPurchase(IAPToken) {
             supportedMethods: 'https://store.microsoft.com/billing',
             data: { itemId: items[0].itemId },
         }]);
-        alert(items[0].Title + " purchase successful!");
+        alert(items[0].title + " purchase successful!");
         const response = await request.show();
-        alert(items[0].Title + " purchase successful!");
+        alert(items[0].title + " purchase successful!");
     } catch (error) {
         console.error("Error:", error.message);
         return;
