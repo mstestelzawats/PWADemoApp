@@ -30,7 +30,6 @@
 //         }
 //     } while (service === undefined && counter < 5)
 // }
-
 export async function DigitalGoodsPurchase(IAPToken) {
     if (window.getDigitalGoodsService === undefined) {
         // Digital Goods API is not supported in this context.
@@ -51,21 +50,24 @@ export async function DigitalGoodsPurchase(IAPToken) {
     }
 }
 
-export async function DigitalGoodsConfirmPurchases() {
+export async function DigitalGoodsConfirmPurchase(token) {
     if (window.getDigitalGoodsService === undefined) {
         // Digital Goods API is not supported in this context.
         alert("getDigitalGoodsService is undefined");
-        return;
+        return false;
     }
     try {
         const service = await window.getDigitalGoodsService('https://store.microsoft.com/billing');
         const purchases = await service.listPurchases();
         for (const p of purchases) {
             alert(p.itemId);
+            if(p.itemId === token){
+                return true;
+            }
         }
     } catch (error) {
         console.error("Error:", error.message);
-        return;
+        return false;
     }
 }
 
@@ -82,6 +84,8 @@ export async function DigitalGoodsGetDetails() {
             alert(item.itemId);
             alert(item.title);
             alert(item.description);
+            alert(item.price.currency);
+            alert(item.price.value);
         }
         return "dg!";
     } catch (error) {
@@ -96,10 +100,11 @@ var ameatureTitle = "Amateur";
 var ameatureMessage = "You are an amateur! Step up your game!";
 var proTitle = "Pro";
 var proMessage = "You are a pro! Incredible! Undeniable! Amazing!";
-var pro = false;
+var pro = await DigitalGoodsConfirmPurchase("RemoveAds");
 
 export function GetStatus()
 {
+    alert(pro);
     if(pro)
     {
         return proTitle;
@@ -120,6 +125,7 @@ export async function BuyPro()
 {
     alert("buying pro");
     await DigitalGoodsPurchase("SCCPWATestAppSubscription1");
+    window.location.reload();
 }
 
 // Code to support purchase of 'Coins' consumable
@@ -128,7 +134,7 @@ var poorTitle = "You are Coinless...";
 var poorMessage = "You have no coins to use! Get some!";
 var richTitle = "You've got coins";
 var richMessage = "Look at you, moneybags! Use your coins!";
-var coin = false;
+var coin = await DigitalGoodsConfirmPurchase("Coins");
 
 export function GetCoin()
 {
@@ -152,11 +158,38 @@ export function BuyCoins()
 {
     alert("buying coins");
     DigitalGoodsPurchase("Coins");
+    window.location.reload();
 }
 
-export function UseCoins()
+export async function UseCoins()
 {
+    coinCount = coinCount + 5;
+    alert(coinCount);
     alert("using coins");
+    if (window.getDigitalGoodsService === undefined) {
+        // Digital Goods API is not supported in this context.
+        alert("getDigitalGoodsService is undefined");
+        return;
+    }
+    try {
+        const service = await window.getDigitalGoodsService('https://store.microsoft.com/billing');
+        const purchases = await service.listPurchases();
+        for (const p of purchases) {
+            aleart(p.itemId);
+            if(p.itemId === "Coins")
+            {
+                coinCount = coinCount + 5;
+                service.consume("Coins");
+                alert("PLUS FIVE COINS");
+                window.location.reload();
+                return;
+            }
+        }
+        alert("NO COINS TO USE");
+    } catch (error) {
+        console.error("Error:", error.message);
+        return "dg error";
+    }
 }
 
 // Code to support purchase of 'RemoveAds' durable
@@ -165,11 +198,11 @@ var adTitle = "BANNER AD BANNER AD BANNER AD";
 var adMessage = "Hate this annoying ad? Remove it!";
 var noAdTitle = "";
 var noAdMessage = "Thanks for removing that annoying ad! So much better :)";
-var ads = true;
+var ads = await DigitalGoodsConfirmPurchase("SCCPWATestAppSubscription1");
 
 export function GetAd()
 {
-    if(ads)
+    if(!ads)
     {
         return adTitle;
     }
@@ -178,7 +211,7 @@ export function GetAd()
 
 export function GetAdMessage()
 {
-    if(ads)
+    if(!ads)
     {
         return adMessage;
     }
@@ -189,4 +222,5 @@ export function RemoveAds()
 {
     alert("Remove Ads");
     DigitalGoodsPurchase("RemoveAds");
+    window.location.reload();
 }
