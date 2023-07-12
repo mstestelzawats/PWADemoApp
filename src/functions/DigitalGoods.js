@@ -60,7 +60,6 @@ export async function DigitalGoodsConfirmPurchase(token) {
         const service = await window.getDigitalGoodsService('https://store.microsoft.com/billing');
         const purchases = await service.listPurchases();
         for (const p of purchases) {
-            alert(p.itemId);
             if(p.itemId === token){
                 return true;
             }
@@ -172,7 +171,6 @@ export async function UseCoins()
         const service = await window.getDigitalGoodsService('https://store.microsoft.com/billing');
         const purchases = await service.listPurchases();
         for (const p of purchases) {
-            alert(p.itemId);
             if(p.itemId === "Coins")
             {
                 service.consume("Coins");
