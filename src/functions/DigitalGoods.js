@@ -59,8 +59,8 @@ export async function DigitalGoodsConfirmPurchases() {
     }
     try {
         const service = await window.getDigitalGoodsService('https://store.microsoft.com/billing');
-        purchases = await service.listPurchases();
-        for (p of purchases) {
+        const purchases = await service.listPurchases();
+        for (const p of purchases) {
             alert(p.itemId);
         }
     } catch (error) {
@@ -78,7 +78,7 @@ export async function DigitalGoodsGetDetails() {
     try {
         const service = await window.getDigitalGoodsService('https://store.microsoft.com/billing');
         const details = await service.getDetails(["SCCPWATestAppSubscription1", "Coins", "RemoveAds"]);
-        for (item of details) {
+        for (const item of details) {
             alert(item.itemId);
             alert(item.title);
             alert(item.description);
