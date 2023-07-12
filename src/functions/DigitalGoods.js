@@ -43,7 +43,6 @@ export async function DigitalGoodsPurchase(IAPToken) {
             supportedMethods: 'https://store.microsoft.com/billing',
             data: { itemId: items[0].itemId },
         }]);
-        alert(items[0].title + " purchase successful!");
         const response = await request.show();
         alert(items[0].title + " purchase successful!");
     } catch (error) {
@@ -123,7 +122,6 @@ export function GetStatusMessage()
 
 export async function BuyPro()
 {
-    alert("buying pro");
     await DigitalGoodsPurchase("SCCPWATestAppSubscription1");
     window.location.reload();
 }
@@ -156,14 +154,12 @@ export function GetCoinMessage()
 
 export function BuyCoins()
 {
-    alert("buying coins");
     DigitalGoodsPurchase("Coins");
     window.location.reload();
 }
 
 export async function UseCoins()
 {
-    alert("using coins");
     if (window.getDigitalGoodsService === undefined) {
         // Digital Goods API is not supported in this context.
         alert("getDigitalGoodsService is undefined");
@@ -216,7 +212,6 @@ export function GetAdMessage()
 
 export function RemoveAds()
 {
-    alert("Remove Ads");
     DigitalGoodsPurchase("RemoveAds");
     window.location.reload();
 }
