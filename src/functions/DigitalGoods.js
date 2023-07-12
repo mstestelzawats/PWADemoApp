@@ -213,5 +213,5 @@ export function GetAdMessage()
 export function RemoveAds()
 {
     DigitalGoodsPurchase("RemoveAds");
-    window.location.reload();
+    //window.location.reload();
 }
