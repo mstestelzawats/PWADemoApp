@@ -118,7 +118,7 @@ var ameatureTitle = "Amateur";
 var ameatureMessage = "You are an amateur! Step up your game!";
 var proTitle = "Pro";
 var proMessage = "You are a pro! Incredible! Undeniable! Amazing!";
-var pro = await DigitalGoodsConfirmPurchase("RemoveAds");
+var pro = await DigitalGoodsConfirmPurchase("SCCPWATestAppSubscription1");
 
 export function GetStatus()
 {
