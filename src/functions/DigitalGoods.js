@@ -50,6 +50,88 @@ export async function DigitalGoodsPurchase(IAPToken) {
         return;
     }
 }
+
+export async function GetDetails(proPrice, coinPrice, adsPrice, productDetails) {
+    if (window.getDigitalGoodsService === undefined) {
+        // Digital Goods API is not supported in this context.
+        alert("getDigitalGoodsService is undefined");
+        return;
+    }
+    try {
+        const service = await window.getDigitalGoodsService("https://store.microsoft.com/billing");
+        const details = await service.getDetails(["SCCPWATestAppSubscription1", "Coins", "RemoveAds"]);
+        for (const item of details) {
+            if(item.itemId === "SCCPWATestAppSubscription1"){
+                proPrice = "" + item.price.value + " " + item.price.currency + " " + item.subscriptionPeriod;
+            }
+            if(item.itemId === "Coins"){
+              coinPrice = "" + item.price.value + " " + item.price.currency;
+            }
+            if(item.itemId === "RemoveAds"){
+              adsPrice = "" + item.price.value + " " + item.price.currency;
+            }
+            productDetails = productDetails + item.title + ": " + item.description + "\n";
+        }
+        return;
+    } catch (error) {
+        console.error("Error:", error.message);
+        return;
+    }
+  }
+
+  export async function UpdatePurchases(pro, coin, ads) {
+    if (window.getDigitalGoodsService === undefined) {
+        // Digital Goods API is not supported in this context.
+        alert("getDigitalGoodsService is undefined");
+        return;
+    }
+    try {
+        const service = await window.getDigitalGoodsService("https://store.microsoft.com/billing");
+        const purchases = await service.listPurchases();
+        for (const item of purchases) {
+          if(item.itemId === "SCCPWATestAppSubscription1"){
+            pro = true;
+          }
+          if(item.itemId === "Coins"){
+            coin = true;
+          }
+          if(item.itemId === "RemoveAds"){
+            ads = true;
+          }
+          return;
+        }
+    } catch (error) {
+        console.error("Error:", error.message);
+        return;
+    }
+  }
+
+  export async function UseCoins()
+  {
+    if (window.getDigitalGoodsService === undefined) {
+        // Digital Goods API is not supported in this context.
+        alert("getDigitalGoodsService is undefined");
+        return;
+    }
+    try {
+        const service = await window.getDigitalGoodsService('https://store.microsoft.com/billing');
+        const purchases = await service.listPurchases();
+        for (const p of purchases) {
+            if(p.itemId === "Coins")
+            {
+                service.consume("9P7WL3ZK0C6K");
+                alert("PLUS FIVE COINS");
+                return;
+            }
+        }
+        alert("NO COINS TO USE");
+        return;
+    } catch (error) {
+        alert("Error while using coins");
+        console.error("Error:", error.message);
+        return;
+    }
+  }
 // export async function GetDigitalGoodsService(){
 //     if (window.getDigitalGoodsService === undefined) {
 //         // Digital Goods API is not supported in this context.

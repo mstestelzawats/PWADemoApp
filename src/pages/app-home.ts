@@ -1,6 +1,6 @@
 import { LitElement, css, html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
-import {DigitalGoodsPurchase} from '../functions/DigitalGoods.js';
+import {DigitalGoodsPurchase, GetDetails, UpdatePurchases, UseCoins} from '../functions/DigitalGoods.js';
 
 import '@shoelace-style/shoelace/dist/components/card/card.js';
 import '@shoelace-style/shoelace/dist/components/button/button.js';
@@ -47,64 +47,9 @@ export class AppHome extends LitElement {
   // Add the functions I want to call on page render
   connectedCallback(): void {
     super.connectedCallback();
-    this.GetDetails();
-    this.UpdatePurchases();
+    GetDetails(this.proPrice, this.coinPrice, this.adsPrice, this.productDetails);
+    UpdatePurchases(this.pro, this.coin, this.ads);
     this.UpdateTitlesAndMessaged();
-  }
-
-  async GetDetails() {
-    if (window.getDigitalGoodsService === undefined) {
-        // Digital Goods API is not supported in this context.
-        alert("getDigitalGoodsService is undefined");
-        return;
-    }
-    try {
-        const service = await window.getDigitalGoodsService("https://store.microsoft.com/billing");
-        const details = await service.getDetails(["SCCPWATestAppSubscription1", "Coins", "RemoveAds"]);
-        for (const item of details) {
-            if(item.itemId === "SCCPWATestAppSubscription1"){
-                this.proPrice = "" + item.price.value + " " + item.price.currency + " " + item.subscriptionPeriod;
-            }
-            if(item.itemId === "Coins"){
-              this.coinPrice = "" + item.price.value + " " + item.price.currency;
-            }
-            if(item.itemId === "RemoveAds"){
-              this.adsPrice = "" + item.price.value + " " + item.price.currency;
-            }
-            this.productDetails = this.productDetails + item.title + ": " + item.description + "\n";
-        }
-        return;
-    } catch (error: any) {
-        console.error("Error:", error.message);
-        return;
-    }
-  }
-
-  async UpdatePurchases() {
-    if (window.getDigitalGoodsService === undefined) {
-        // Digital Goods API is not supported in this context.
-        alert("getDigitalGoodsService is undefined");
-        return;
-    }
-    try {
-        const service = await window.getDigitalGoodsService("https://store.microsoft.com/billing");
-        const purchases = await service.listPurchases();
-        for (const item of purchases) {
-          if(item.itemId === "SCCPWATestAppSubscription1"){
-            this.pro = true;
-          }
-          if(item.itemId === "Coins"){
-            this.coin = true;
-          }
-          if(item.itemId === "RemoveAds"){
-            this.ads = true;
-          }
-          return;
-        }
-    } catch (error: any) {
-        console.error("Error:", error.message);
-        return;
-    }
   }
 
   UpdateTitlesAndMessaged(){
@@ -136,109 +81,27 @@ export class AppHome extends LitElement {
     }
   }
 
-  // async DigitalGoodsPurchase(IAPToken: string) {
-  //   if (window.getDigitalGoodsService === undefined) {
-  //       // Digital Goods API is not supported in this context.
-  //       alert("getDigitalGoodsService is undefined");
-  //       return;
-  //   }
-  //   try {
-  //       const service = await window.getDigitalGoodsService('https://store.microsoft.com/billing');
-  //       const items = await service.getDetails([IAPToken]);
-  //       const request = new PaymentRequest([{
-  //           supportedMethods: "https://store.microsoft.com/billing",
-  //           data: { itemId: items[0].itemId },
-  //       }]);
-  //       const response = await request.show();
-  //       alert(items[0].title + " purchase successful!");
-  //   } catch (error: any) {
-  //       console.error("Error:", error.message);
-  //       return;
-  //   }
-  // }
-
   async BuyPro()
   {
     await DigitalGoodsPurchase("SCCPWATestAppSubscription1");
-    this.UpdatePurchases();
+    UpdatePurchases(this.pro, this.coin, this.ads);
     this.UpdateTitlesAndMessaged();
   }
 
   async BuyCoins()
   {
     await DigitalGoodsPurchase("Coins");
-    this.UpdatePurchases();
+    UpdatePurchases(this.pro, this.coin, this.ads);
     this.UpdateTitlesAndMessaged();
   }
 
   async BuyAds()
   {
     await DigitalGoodsPurchase("RemoveAds");
-    this.UpdatePurchases();
+    UpdatePurchases(this.pro, this.coin, this.ads);
     this.UpdateTitlesAndMessaged();
   }
 
-  async UseCoins()
-  {
-    if (window.getDigitalGoodsService === undefined) {
-        // Digital Goods API is not supported in this context.
-        alert("getDigitalGoodsService is undefined");
-        return;
-    }
-    try {
-        const service = await window.getDigitalGoodsService('https://store.microsoft.com/billing');
-        const purchases = await service.listPurchases();
-        for (const p of purchases) {
-            if(p.itemId === "Coins")
-            {
-                service.consume("9P7WL3ZK0C6K");
-                alert("PLUS FIVE COINS");
-                this.UpdatePurchases();
-                this.UpdateTitlesAndMessaged();
-                return;
-            }
-        }
-        alert("NO COINS TO USE");
-        return;
-    } catch (error: any) {
-        alert("Error while using coins");
-        console.error("Error:", error.message);
-        return;
-    }
-  }
-
-  // var service;
-
-// export async function GetService()
-// {
-//     InitializeService();
-//     return service;
-// }
-
-// async function InitializeService()
-// {
-//     var counter = 0;
-//     do {
-//         alert("entering loop");
-//         counter++;
-//         if (service !== undefined)
-//         {
-//             alert("service defined");
-//             return;
-//         }
-//         if (window.getDigitalGoodsService === undefined) {
-//             // Digital Goods API is not supported in this context.
-//             alert("getDigitalGoodsService is undefined");
-//             return;
-//         }
-//         try {
-//             alert("getDigitalGoodsService is defined, trying to get service");
-//             service = await window.getDigitalGoodsService('https://store.microsoft.com/billing');
-//         } catch (error) {
-//             console.error("Failed to get service:", error.message);
-//         }
-//     } while (service === undefined && counter < 5)
-// }
   static get styles() {
     return [
       styles,
@@ -348,7 +211,7 @@ export class AppHome extends LitElement {
         <p>${this.coinPrice}</p>
       </div>
       <div class="item">
-        <button type="button" class="secondary" @click="${() => {this.UseCoins();}}">Use Coins</button>
+        <button type="button" class="secondary" @click="${() => {UseCoins(); UpdatePurchases(this.pro, this.coin, this.ads); this.UpdateTitlesAndMessaged();}}">Use Coins</button>
       </div>
     </div>
 
