@@ -1,6 +1,5 @@
 import { LitElement, css, html } from 'lit';
-import { property, customElement, state } from 'lit/decorators.js';
-//import { GetStatus, GetStatusMessage, GetProPrice, GetCoin, GetCoinMessage, GetCoinPrice, BuyCoins, UseCoins, GetAd, GetAdMessage, GetAdPrice, RemoveAds, GetDetails, DigitalGoodsListAllPurchases } from "../functions/DigitalGoods.js";
+import { customElement, state } from 'lit/decorators.js';
 
 import '@shoelace-style/shoelace/dist/components/card/card.js';
 import '@shoelace-style/shoelace/dist/components/button/button.js';
@@ -155,23 +154,23 @@ export class AppHome extends LitElement {
     }
   }
 
-  BuyPro()
+  async BuyPro()
   {
-    this.DigitalGoodsPurchase("SCCPWATestAppSubscription1");
+    await this.DigitalGoodsPurchase("SCCPWATestAppSubscription1");
     this.UpdatePurchases();
     this.UpdateTitlesAndMessaged();
   }
 
-  BuyCoins()
+  async BuyCoins()
   {
-    this.DigitalGoodsPurchase("Coins");
+    await this.DigitalGoodsPurchase("Coins");
     this.UpdatePurchases();
     this.UpdateTitlesAndMessaged();
   }
 
-  BuyAds()
+  async BuyAds()
   {
-    this.DigitalGoodsPurchase("RemoveAds");
+    await this.DigitalGoodsPurchase("RemoveAds");
     this.UpdatePurchases();
     this.UpdateTitlesAndMessaged();
   }
