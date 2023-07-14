@@ -50,6 +50,20 @@ export async function DigitalGoodsPurchase(IAPToken) {
         return;
     }
 }
+export async function GetDigitalGoodsService(){
+    if (window.getDigitalGoodsService === undefined) {
+        // Digital Goods API is not supported in this context.
+        alert("getDigitalGoodsService is undefined");
+        return ;
+    }
+    try {
+        return await window.getDigitalGoodsService("https://store.microsoft.com/billing");
+    } catch(error)
+    {
+        console.error("Error:", error.message);
+        return;
+    }
+}
 
 export async function DigitalGoodsConfirmPurchase(token) {
     if (window.getDigitalGoodsService === undefined) {

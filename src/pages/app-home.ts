@@ -1,5 +1,6 @@
 import { LitElement, css, html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
+import {DigitalGoodsPurchase} from '../functions/DigitalGoods.js';
 
 import '@shoelace-style/shoelace/dist/components/card/card.js';
 import '@shoelace-style/shoelace/dist/components/button/button.js';
@@ -38,6 +39,8 @@ export class AppHome extends LitElement {
   @state() coinMessage = "MESSAGE";
   @state() adsTitle = "TITLE";
   @state() adsMessage = "MESSAGE";
+
+  @state() service: any;
 
   @state() productDetails = "";
 
@@ -133,44 +136,44 @@ export class AppHome extends LitElement {
     }
   }
 
-  async DigitalGoodsPurchase(IAPToken: string) {
-    if (window.getDigitalGoodsService === undefined) {
-        // Digital Goods API is not supported in this context.
-        alert("getDigitalGoodsService is undefined");
-        return;
-    }
-    try {
-        const service = await window.getDigitalGoodsService('https://store.microsoft.com/billing');
-        const items = await service.getDetails([IAPToken]);
-        const request = new PaymentRequest([{
-            supportedMethods: "https://store.microsoft.com/billing",
-            data: { itemId: items[0].itemId },
-        }]);
-        const response = await request.show();
-        alert(items[0].title + " purchase successful!");
-    } catch (error: any) {
-        console.error("Error:", error.message);
-        return;
-    }
-  }
+  // async DigitalGoodsPurchase(IAPToken: string) {
+  //   if (window.getDigitalGoodsService === undefined) {
+  //       // Digital Goods API is not supported in this context.
+  //       alert("getDigitalGoodsService is undefined");
+  //       return;
+  //   }
+  //   try {
+  //       const service = await window.getDigitalGoodsService('https://store.microsoft.com/billing');
+  //       const items = await service.getDetails([IAPToken]);
+  //       const request = new PaymentRequest([{
+  //           supportedMethods: "https://store.microsoft.com/billing",
+  //           data: { itemId: items[0].itemId },
+  //       }]);
+  //       const response = await request.show();
+  //       alert(items[0].title + " purchase successful!");
+  //   } catch (error: any) {
+  //       console.error("Error:", error.message);
+  //       return;
+  //   }
+  // }
 
   async BuyPro()
   {
-    await this.DigitalGoodsPurchase("SCCPWATestAppSubscription1");
+    await DigitalGoodsPurchase("SCCPWATestAppSubscription1");
     this.UpdatePurchases();
     this.UpdateTitlesAndMessaged();
   }
 
   async BuyCoins()
   {
-    await this.DigitalGoodsPurchase("Coins");
+    await DigitalGoodsPurchase("Coins");
     this.UpdatePurchases();
     this.UpdateTitlesAndMessaged();
   }
 
   async BuyAds()
   {
-    await this.DigitalGoodsPurchase("RemoveAds");
+    await DigitalGoodsPurchase("RemoveAds");
     this.UpdatePurchases();
     this.UpdateTitlesAndMessaged();
   }
@@ -284,42 +287,7 @@ export class AppHome extends LitElement {
         -moz-border-radius: 15px
       }
 
-      #welcomeBar {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-      }
-
-      #welcomeCard,
-      #infoCard {
-        padding: 18px;
-        padding-top: 0px;
-      }
-
-      sl-card::part(footer) {
-        display: flex;
-        justify-content: flex-end;
-      }
-
-      @media(min-width: 750px) {
-        sl-card {
-          width: 70vw;
-        }
-      }
-
-
-      @media (horizontal-viewport-segments: 2) {
-        #welcomeBar {
-          flex-direction: row;
-          align-items: flex-start;
-          justify-content: space-between;
-        }
-
-        #welcomeCard {
-          margin-right: 64px;
-        }
-      }
+    }
     `];
   }
 
