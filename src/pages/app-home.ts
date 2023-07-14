@@ -1,6 +1,6 @@
 import { LitElement, css, html } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
-import { GetStatus, GetStatusMessage, BuyPro, GetCoin, GetCoinMessage, BuyCoins, UseCoins, GetAd, GetAdMessage, RemoveAds, DigitalGoodsGetDetails } from "../functions/DigitalGoods.js";
+import { GetStatus, GetStatusMessage, BuyPro, GetCoin, GetCoinMessage, BuyCoins, UseCoins, GetAd, GetAdMessage, RemoveAds, DigitalGoodsGetDetails, DigitalGoodsConfirmPurchase } from "../functions/DigitalGoods.js";
 
 import '@shoelace-style/shoelace/dist/components/card/card.js';
 import '@shoelace-style/shoelace/dist/components/button/button.js';
@@ -136,14 +136,6 @@ export class AppHome extends LitElement {
     }
     </style>
 
-    <script>
-      alert("IN RENDER IN SCRIPT");
-      function ChangeCoinPile()
-      {
-        alert("IN");
-      }
-    </script>
-
     <div class="parent">
       <h2>${GetStatus()}</h2>
       <div class="item">
@@ -171,6 +163,9 @@ export class AppHome extends LitElement {
       <h2>Products to Buy:</h2>
       <div class="item">
         <button type="button" class="primary" @click="${async () => {await DigitalGoodsGetDetails();}}">Get Details</button>
+      </dev>
+      <div class="item">
+        <button type="button" class="primary" @click="${async () => {await DigitalGoodsConfirmPurchase();}}">Show purchases</button>
       </dev>
     </div>
 
