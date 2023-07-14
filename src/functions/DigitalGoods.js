@@ -171,7 +171,7 @@ export async function UseCoins()
         for (const p of purchases) {
             if(p.itemId === "Coins")
             {
-                service.consume("Coins");
+                alert(service.consume("9P7WL3ZK0C6K"));
                 alert("PLUS FIVE COINS");
                 window.location.reload();
                 return;
