@@ -1,6 +1,6 @@
 import { LitElement, css, html } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
-import { GetStatus, GetStatusMessage, BuyPro, GetCoin, GetCoinMessage, BuyCoins, UseCoins, GetAd, GetAdMessage, RemoveAds, DigitalGoodsGetDetails, DigitalGoodsListAllPurchases } from "../functions/DigitalGoods.js";
+import { GetStatus, GetStatusMessage, GetProPrice, BuyPro, GetCoin, GetCoinMessage, BuyCoins, UseCoins, GetAd, GetAdMessage, RemoveAds, DigitalGoodsGetDetails, DigitalGoodsListAllPurchases } from "../functions/DigitalGoods.js";
 
 import '@shoelace-style/shoelace/dist/components/card/card.js';
 import '@shoelace-style/shoelace/dist/components/button/button.js';
@@ -143,6 +143,9 @@ export class AppHome extends LitElement {
       </div>
       <div class="item">
         <button type="button" class="primary" @click="${() => {BuyPro();}}">Buy Pro</button>
+      </div>
+      <div class="item">
+        <p>${GetProPrice()}</p>
       </div>
     </div>
 

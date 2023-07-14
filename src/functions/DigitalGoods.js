@@ -112,12 +112,36 @@ export async function DigitalGoodsGetDetails() {
     }
 }
 
+export async function DigitalGoodsGetPrices() {
+    alert("GETTING PRICES");
+    if (window.getDigitalGoodsService === undefined) {
+        // Digital Goods API is not supported in this context.
+        alert("getDigitalGoodsService is undefined");
+        return;
+    }
+    try {
+        const service = await window.getDigitalGoodsService('https://store.microsoft.com/billing');
+        const details = await service.getDetails(["SCCPWATestAppSubscription1", "Coins", "RemoveAds"]);
+        for (const item of details) {
+            if(item.itemId === "Coins")
+            {
+                coinPrice = "" + item.price.value + item.price.currency;
+            }
+        }
+        return "dg!";
+    } catch (error) {
+        console.error("Error:", error.message);
+        return "dg error";
+    }
+}
+
 // Code to support purchase of 'SCCPWATestAppSubscription1' subscription
 
 var ameatureTitle = "Amateur";
 var ameatureMessage = "You are an amateur! Step up your game!";
 var proTitle = "Pro";
 var proMessage = "You are a pro! Incredible! Undeniable! Amazing!";
+var proPrice = "PRICE";
 var pro = await DigitalGoodsConfirmPurchase("SCCPWATestAppSubscription1");
 
 export function GetStatus()
@@ -138,6 +162,11 @@ export function GetStatusMessage()
     return ameatureMessage;
 }
 
+export function GetProPrice()
+{
+    return proPrice;
+}
+
 export async function BuyPro()
 {
     await DigitalGoodsPurchase("SCCPWATestAppSubscription1");
@@ -150,6 +179,7 @@ var poorTitle = "You are Coinless...";
 var poorMessage = "You have no coins to use! Get some!";
 var richTitle = "You've got coins";
 var richMessage = "Look at you, moneybags! Use your coins!";
+var coinPrice = "PRICE";
 var coin = await DigitalGoodsConfirmPurchase("Coins");
 
 export function GetCoin()
@@ -208,6 +238,7 @@ var adTitle = "BANNER AD BANNER AD BANNER AD";
 var adMessage = "Hate this annoying ad? Remove it!";
 var noAdTitle = "";
 var noAdMessage = "Thanks for removing that annoying ad! So much better :)";
+var adPrice = "PRICE";
 var ads = await DigitalGoodsConfirmPurchase("RemoveAds");
 
 export function GetAd()
@@ -233,3 +264,6 @@ export async function RemoveAds()
     await DigitalGoodsPurchase("RemoveAds");
     window.location.reload();
 }
+
+// Populate price on page load
+await DigitalGoodsGetPrices();
