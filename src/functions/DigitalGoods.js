@@ -89,11 +89,45 @@ export async function DigitalGoodsListAllPurchases() {
     }
 }
 
-export async function DigitalGoodsGetDetails() {
+export async function DigitalGoodsGetPrices(id) {
     if (window.getDigitalGoodsService === undefined) {
         // Digital Goods API is not supported in this context.
         alert("getDigitalGoodsService is undefined");
         return;
+    }
+    try {
+        const service = await window.getDigitalGoodsService('https://store.microsoft.com/billing');
+        const details = await service.getDetails(["SCCPWATestAppSubscription1", "Coins", "RemoveAds"]);
+        for (const item of details) {
+            if(item.itemId === id && id === "SCCPWATestAppSubscription1"){
+                var price = "" + item.price.value + " " + item.price.currency;
+                if (id === "SCCPWATestAppSubscription1"){
+                    price = price + " " + item.subscriptionPeriod;
+                }
+                return price;
+            }
+        }
+        return "dg!";
+    } catch (error) {
+        console.error("Error:", error.message);
+        return "dg error";
+    }
+}
+
+// code to support listing products
+
+var productDetails = await DigitalGoodsGetDetails();
+
+export function GetDetails(){
+    return productDetails;
+}
+
+export async function DigitalGoodsGetDetails() {
+    return "TEST TEST \n TEST2 TEST2";
+    if (window.getDigitalGoodsService === undefined) {
+        // Digital Goods API is not supported in this context.
+        alert("getDigitalGoodsService is undefined");
+        return "no dg";
     }
     try {
         const service = await window.getDigitalGoodsService('https://store.microsoft.com/billing');
@@ -112,34 +146,12 @@ export async function DigitalGoodsGetDetails() {
     }
 }
 
-export async function DigitalGoodsGetPrices(id) {
-    if (window.getDigitalGoodsService === undefined) {
-        // Digital Goods API is not supported in this context.
-        alert("getDigitalGoodsService is undefined");
-        return;
-    }
-    try {
-        const service = await window.getDigitalGoodsService('https://store.microsoft.com/billing');
-        const details = await service.getDetails(["SCCPWATestAppSubscription1", "Coins", "RemoveAds"]);
-        for (const item of details) {
-            if(item.itemId === id)
-            {
-                return "" + item.price.value + " " + item.price.currency;
-            }
-        }
-        return "dg!";
-    } catch (error) {
-        console.error("Error:", error.message);
-        return "dg error";
-    }
-}
-
 // Code to support purchase of 'SCCPWATestAppSubscription1' subscription
 
 var ameatureTitle = "Amateur";
-var ameatureMessage = "You are an amateur! Step up your game!";
+var ameatureMessage = "You are an amateur! Step up your game and get the Pro Subscription!";
 var proTitle = "Pro";
-var proMessage = "You are a pro! Incredible! Undeniable! Amazing!";
+var proMessage = "You are subscribed as a pro! Incredible! Undeniable! Amazing!";
 var proPrice = await DigitalGoodsGetPrices("SCCPWATestAppSubscription1");
 var pro = await DigitalGoodsConfirmPurchase("SCCPWATestAppSubscription1");
 
