@@ -52,10 +52,14 @@ export async function DigitalGoodsPurchase(IAPToken) {
 }
 
 export async function GetDetails(proPrice, coinPrice, adsPrice, productDetails) {
+    var proPrice = "0.99 USD";
+    var coinPrice = "0.99 USD";
+    var adsPrice = "0.99 USD";
+    var productDetails = "";
     if (window.getDigitalGoodsService === undefined) {
         // Digital Goods API is not supported in this context.
         alert("getDigitalGoodsService is undefined");
-        return;
+        return [proPrice, coinPrice, adsPrice, productDetails];
     }
     try {
         const service = await window.getDigitalGoodsService("https://store.microsoft.com/billing");
@@ -65,25 +69,28 @@ export async function GetDetails(proPrice, coinPrice, adsPrice, productDetails) 
                 proPrice = "" + item.price.value + " " + item.price.currency + " " + item.subscriptionPeriod;
             }
             if(item.itemId === "Coins"){
-              coinPrice = "" + item.price.value + " " + item.price.currency;
+                coinPrice = "" + item.price.value + " " + item.price.currency;
             }
             if(item.itemId === "RemoveAds"){
-              adsPrice = "" + item.price.value + " " + item.price.currency;
+                adsPrice = "" + item.price.value + " " + item.price.currency;
             }
             productDetails = productDetails + item.title + ": " + item.description + "\n";
         }
-        return;
+        return [proPrice, coinPrice, adsPrice, productDetails];
     } catch (error) {
         console.error("Error:", error.message);
-        return;
+        return [proPrice, coinPrice, adsPrice, productDetails];
     }
   }
 
-  export async function UpdatePurchases(pro, coin, ads) {
+  export async function UpdatePurchases() {
+    var pro = false;
+    var coin = false;
+    var ads = false;
     if (window.getDigitalGoodsService === undefined) {
         // Digital Goods API is not supported in this context.
         alert("getDigitalGoodsService is undefined");
-        return;
+        return [pro, coin, ads];
     }
     try {
         const service = await window.getDigitalGoodsService("https://store.microsoft.com/billing");
@@ -98,11 +105,11 @@ export async function GetDetails(proPrice, coinPrice, adsPrice, productDetails) 
           if(item.itemId === "RemoveAds"){
             ads = true;
           }
-          return;
         }
+        return [pro, coin, ads];
     } catch (error) {
         console.error("Error:", error.message);
-        return;
+        return [pro, coin, ads];
     }
   }
 

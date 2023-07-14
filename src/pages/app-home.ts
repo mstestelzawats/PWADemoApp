@@ -45,14 +45,28 @@ export class AppHome extends LitElement {
   @state() productDetails = "";
 
   // Add the functions I want to call on page render
-  connectedCallback(): void {
+  async connectedCallback(){
     super.connectedCallback();
-    GetDetails(this.proPrice, this.coinPrice, this.adsPrice, this.productDetails);
-    UpdatePurchases(this.pro, this.coin, this.ads);
-    this.UpdateTitlesAndMessaged();
+    const detailVals = await GetDetails(); //this.proPrice, this.coinPrice, this.adsPrice, this.productDetails
+    if(detailVals)
+    {
+      this.proPrice = detailVals[0];
+      this.coinPrice = detailVals[1];
+      this.adsPrice = detailVals[2];
+      this.productDetails = detailVals[3];
+    }
+
+    const vals = await UpdatePurchases();
+    if(vals)
+    {
+      this.pro = vals[0];
+      this.coin = vals[1];
+      this.ads = vals[2];
+    }
+    this.UpdateTitlesAndMessages();
   }
 
-  UpdateTitlesAndMessaged(){
+  UpdateTitlesAndMessages(){
     if(this.pro){
         this.proTitle = AppHome.proTitle;
         this.proMessage = AppHome.proMessage;
@@ -84,22 +98,40 @@ export class AppHome extends LitElement {
   async BuyPro()
   {
     await DigitalGoodsPurchase("SCCPWATestAppSubscription1");
-    UpdatePurchases(this.pro, this.coin, this.ads);
-    this.UpdateTitlesAndMessaged();
+    const vals = await UpdatePurchases();
+    if(vals)
+    {
+      this.pro = vals[0];
+      this.coin = vals[1];
+      this.ads = vals[2];
+    }
+    this.UpdateTitlesAndMessages();
   }
 
   async BuyCoins()
   {
     await DigitalGoodsPurchase("Coins");
-    UpdatePurchases(this.pro, this.coin, this.ads);
-    this.UpdateTitlesAndMessaged();
+    const vals = await UpdatePurchases();
+    if(vals)
+    {
+      this.pro = vals[0];
+      this.coin = vals[1];
+      this.ads = vals[2];
+    }
+    this.UpdateTitlesAndMessages();
   }
 
   async BuyAds()
   {
     await DigitalGoodsPurchase("RemoveAds");
-    UpdatePurchases(this.pro, this.coin, this.ads);
-    this.UpdateTitlesAndMessaged();
+    const vals = await UpdatePurchases();
+    if(vals)
+    {
+      this.pro = vals[0];
+      this.coin = vals[1];
+      this.ads = vals[2];
+    }
+    this.UpdateTitlesAndMessages();
   }
 
   static get styles() {
@@ -211,7 +243,17 @@ export class AppHome extends LitElement {
         <p>${this.coinPrice}</p>
       </div>
       <div class="item">
-        <button type="button" class="secondary" @click="${() => {UseCoins(); UpdatePurchases(this.pro, this.coin, this.ads); this.UpdateTitlesAndMessaged();}}">Use Coins</button>
+        <button type="button" class="secondary" @click="${async () => {
+          UseCoins();
+          const vals = await UpdatePurchases();
+          if(vals)
+          {
+            this.pro = vals[0];
+            this.coin = vals[1];
+            this.ads = vals[2];
+          }
+          this.UpdateTitlesAndMessages();
+        }}">Use Coins</button>
       </div>
     </div>
 
