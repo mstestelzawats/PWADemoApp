@@ -71,7 +71,7 @@ export class AppHome extends LitElement {
             this.productDetails = this.productDetails + item.title + ": " + item.description + "\n";
         }
         return;
-    } catch (error) {
+    } catch (error: any) {
         console.error("Error:", error.message);
         return;
     }
@@ -98,7 +98,7 @@ export class AppHome extends LitElement {
           }
           return;
         }
-    } catch (error) {
+    } catch (error: any) {
         console.error("Error:", error.message);
         return;
     }
@@ -133,7 +133,7 @@ export class AppHome extends LitElement {
     }
   }
 
-  async DigitalGoodsPurchase(IAPToken) {
+  async DigitalGoodsPurchase(IAPToken: string) {
     if (window.getDigitalGoodsService === undefined) {
         // Digital Goods API is not supported in this context.
         alert("getDigitalGoodsService is undefined");
@@ -148,7 +148,7 @@ export class AppHome extends LitElement {
         }]);
         const response = await request.show();
         alert(items[0].title + " purchase successful!");
-    } catch (error) {
+    } catch (error: any) {
         console.error("Error:", error.message);
         return;
     }
@@ -197,7 +197,7 @@ export class AppHome extends LitElement {
         }
         alert("NO COINS TO USE");
         return;
-    } catch (error) {
+    } catch (error: any) {
         alert("Error while using coins");
         console.error("Error:", error.message);
         return;
