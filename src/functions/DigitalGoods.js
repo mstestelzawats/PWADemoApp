@@ -113,7 +113,6 @@ export async function DigitalGoodsGetDetails() {
 }
 
 export async function DigitalGoodsGetPrices(id) {
-    alert("GETTING PRICES");
     if (window.getDigitalGoodsService === undefined) {
         // Digital Goods API is not supported in this context.
         alert("getDigitalGoodsService is undefined");
@@ -125,7 +124,7 @@ export async function DigitalGoodsGetPrices(id) {
         for (const item of details) {
             if(item.itemId === id)
             {
-                return "" + item.price.value + item.price.currency;
+                return "" + item.price.value + " " + item.price.currency;
             }
         }
         return "dg!";
@@ -274,6 +273,3 @@ export async function RemoveAds()
     await DigitalGoodsPurchase("RemoveAds");
     window.location.reload();
 }
-
-// Populate price on page load
-await DigitalGoodsGetPrices();
