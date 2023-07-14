@@ -71,6 +71,24 @@ export async function DigitalGoodsConfirmPurchase(token) {
     }
 }
 
+export async function DigitalGoodsListAllPurchases() {
+    if (window.getDigitalGoodsService === undefined) {
+        // Digital Goods API is not supported in this context.
+        alert("getDigitalGoodsService is undefined");
+        return false;
+    }
+    try {
+        const service = await window.getDigitalGoodsService('https://store.microsoft.com/billing');
+        const purchases = await service.listPurchases();
+        for (const p of purchases) {
+            alert(p.itemId);
+        }
+    } catch (error) {
+        console.error("Error:", error.message);
+        return false;
+    }
+}
+
 export async function DigitalGoodsGetDetails() {
     if (window.getDigitalGoodsService === undefined) {
         // Digital Goods API is not supported in this context.
