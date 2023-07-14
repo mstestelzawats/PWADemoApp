@@ -223,7 +223,7 @@ export async function UseCoins()
         for (const p of purchases) {
             if(p.itemId === "Coins")
             {
-                alert(service.consume("9P7WL3ZK0C6K"));
+                service.consume("9P7WL3ZK0C6K");
                 alert("PLUS FIVE COINS");
                 window.location.reload();
                 return;
@@ -231,6 +231,7 @@ export async function UseCoins()
         }
         alert("NO COINS TO USE");
     } catch (error) {
+        alert("Error while using coins");
         console.error("Error:", error.message);
         return "dg error";
     }
