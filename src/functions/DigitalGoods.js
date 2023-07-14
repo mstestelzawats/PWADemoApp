@@ -112,7 +112,7 @@ export async function DigitalGoodsGetDetails() {
     }
 }
 
-export async function DigitalGoodsGetPrices() {
+export async function DigitalGoodsGetPrices(id) {
     alert("GETTING PRICES");
     if (window.getDigitalGoodsService === undefined) {
         // Digital Goods API is not supported in this context.
@@ -123,9 +123,9 @@ export async function DigitalGoodsGetPrices() {
         const service = await window.getDigitalGoodsService('https://store.microsoft.com/billing');
         const details = await service.getDetails(["SCCPWATestAppSubscription1", "Coins", "RemoveAds"]);
         for (const item of details) {
-            if(item.itemId === "Coins")
+            if(item.itemId === id)
             {
-                coinPrice = "" + item.price.value + item.price.currency;
+                return "" + item.price.value + item.price.currency;
             }
         }
         return "dg!";
@@ -141,7 +141,7 @@ var ameatureTitle = "Amateur";
 var ameatureMessage = "You are an amateur! Step up your game!";
 var proTitle = "Pro";
 var proMessage = "You are a pro! Incredible! Undeniable! Amazing!";
-var proPrice = "PRICE";
+var proPrice = await DigitalGoodsGetPrices("SCCPWATestAppSubscription1");
 var pro = await DigitalGoodsConfirmPurchase("SCCPWATestAppSubscription1");
 
 export function GetStatus()
@@ -179,7 +179,7 @@ var poorTitle = "You are Coinless...";
 var poorMessage = "You have no coins to use! Get some!";
 var richTitle = "You've got coins";
 var richMessage = "Look at you, moneybags! Use your coins!";
-var coinPrice = "PRICE";
+var coinPrice = await DigitalGoodsGetPrices("Coins");
 var coin = await DigitalGoodsConfirmPurchase("Coins");
 
 export function GetCoin()
@@ -198,6 +198,11 @@ export function GetCoinMessage()
         return richMessage;
     }
     return poorMessage;
+}
+
+export function GetCoinPrice()
+{
+    return coinPrice;
 }
 
 export async function BuyCoins()
@@ -238,7 +243,7 @@ var adTitle = "BANNER AD BANNER AD BANNER AD";
 var adMessage = "Hate this annoying ad? Remove it!";
 var noAdTitle = "";
 var noAdMessage = "Thanks for removing that annoying ad! So much better :)";
-var adPrice = "PRICE";
+var adsPrice = await DigitalGoodsGetPrices("RemoveAds");
 var ads = await DigitalGoodsConfirmPurchase("RemoveAds");
 
 export function GetAd()
@@ -257,6 +262,11 @@ export function GetAdMessage()
         return adMessage;
     }
     return noAdMessage;
+}
+
+export function GetAdPrice()
+{
+    return adsPrice;
 }
 
 export async function RemoveAds()
