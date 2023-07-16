@@ -85,7 +85,7 @@ export async function UseCoins(){
     if (window.getDigitalGoodsService === undefined) {
         // Digital Goods API is not supported in this context.
         alert("getDigitalGoodsService is undefined");
-        return;
+        return false;
     }
     try {
         const service = await window.getDigitalGoodsService('https://store.microsoft.com/billing');
@@ -95,14 +95,15 @@ export async function UseCoins(){
             {
                 service.consume("9P7WL3ZK0C6K");
                 alert("PLUS FIVE COINS");
-                return;
+                return true;
             }
         }
         alert("NO COINS TO USE");
-        return;
+        return false;
     } catch (error) {
         alert("Error while using coins");
         console.error("Error:", error.message);
-        return;
+        return false;
     }
+    return false;
 }

@@ -17,9 +17,9 @@ export class AppHome extends LitElement {
   private static proTitle = "Pro";
   private static proMessage = "You are subscribed as a pro! Incredible! Undeniable! Amazing!";
   private static poorTitle = "You are Coinless...";
-  private static poorMessage = "You have no coins to use! Get some!";
+  private static poorMessage = "You have no coins to use! Get some to add to your pile!";
   private static richTitle = "You've got coins";
-  private static richMessage = "Look at you, moneybags! Use your coins!";
+  private static richMessage = "Look at you, moneybags! Add those coins to your pile!";
   private static adTitle = "BANNER AD BANNER AD BANNER AD";
   private static adMessage = "Hate this annoying ad? Remove it!";
   private static noAdTitle = "";
@@ -29,20 +29,20 @@ export class AppHome extends LitElement {
   @state() coin = false;
   @state() ads = false;;
 
-  @state() proPrice = "PRICE";
-  @state() coinPrice = "PRICE";
-  @state() adsPrice = "PRICE";
+  @state() proPrice = "";
+  @state() coinPrice = "";
+  @state() adsPrice = "";
 
-  @state() proTitle = "TITLE";
-  @state() proMessage = "MESSAGE";
-  @state() coinTitle = "TITLE";
-  @state() coinMessage = "MESSAGE";
-  @state() adsTitle = "TITLE";
-  @state() adsMessage = "MESSAGE";
-
-  @state() service: any;
+  @state() proTitle = "";
+  @state() proMessage = "";
+  @state() coinTitle = "";
+  @state() coinMessage = "";
+  @state() adsTitle = "";
+  @state() adsMessage = "";
 
   @state() productDetails = "";
+
+  @state() coinPile = 0;
 
   // Add the functions I want to call on page render
   async connectedCallback(){
@@ -147,7 +147,7 @@ export class AppHome extends LitElement {
       }
       div.subheader{
         text-align: center;
-        font-size: 20px;
+        font-size: -35px, 20px;
         margin: 0px;
       }
 
@@ -166,8 +166,9 @@ export class AppHome extends LitElement {
         white-space: nowrap;
       }
       div.coinpile{
-        margin: -20px 15px;
-        font-size: 50px;
+        text-align: center;
+        margin: 15px;
+        font-size: 70px;
       }
       button.primary{
         background-color: dodgerblue;
@@ -209,13 +210,15 @@ export class AppHome extends LitElement {
   render() {
     return html`
     <header>
-    <div class="header">
-    <h1>COINS!!</h1>
-    </div>
-    <div class="subheader">
-    <p>Welcome to the coins app! Buy coins, use coins, become a pro, and get rid of the pesky ads!</p>
-    </div>
+      <div class="header">
+        <h1>COINS!!</h1>
+      </div>
+      <div class="subheader">
+        <p>Welcome to the coins app! Buy coins and add them to your pile! Become a pro! Get rid of the pesky ads!</p>
+      </div>
     </header>
+
+    <div class="coinpile">COIN PILE: ${this.coinPile}</div>
 
     <body>
     <div class="parent">
@@ -244,16 +247,12 @@ export class AppHome extends LitElement {
       </div>
       <div class="item">
         <button type="button" class="secondary" @click="${async () => {
-          UseCoins();
-          const vals = await UpdatePurchases();
-          if(vals)
-          {
-            this.pro = vals[0];
-            this.coin = vals[1];
-            this.ads = vals[2];
+          if(await UseCoins()){
+            this.coin = false;
+            this.coinPile++;
           }
           this.UpdateTitlesAndMessages();
-        }}">Use Coins</button>
+        }}">Add coins to pile</button>
       </div>
     </div>
 
