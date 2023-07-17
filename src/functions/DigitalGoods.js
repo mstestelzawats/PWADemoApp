@@ -19,35 +19,27 @@ export async function DigitalGoodsPurchase(IAPToken) {
     }
 }
 
-export async function GetDetails(proPrice, coinPrice, adsPrice, productDetails) {
-    var proPrice = "0.99 USD";
-    var coinPrice = "0.99 USD";
-    var adsPrice = "0.99 USD";
+export async function GetDetails() {
     var productDetails = "";
     if (window.getDigitalGoodsService === undefined) {
         // Digital Goods API is not supported in this context.
         alert("getDigitalGoodsService is undefined");
-        return [proPrice, coinPrice, adsPrice, productDetails];
+        return productDetails;
     }
     try {
         const service = await window.getDigitalGoodsService("https://store.microsoft.com/billing");
         const details = await service.getDetails(["SCCPWATestAppSubscription1", "Coins", "RemoveAds"]);
         for (const item of details) {
             if(item.itemId === "SCCPWATestAppSubscription1"){
-                proPrice = "" + item.price.value + " " + item.price.currency + " " + item.subscriptionPeriod + " Renewal period";
+                productDetails = "" + productDetails + item.title + ": " + item.description + " Price: " + item.price.value + " " + item.price.currency + " " + item.subscriptionPeriod + " Renewal period" + "\n";
+            }else{
+                productDetails = "" + productDetails + item.title + ": " + item.description + " Price: " + item.price.value + " " + item.price.currency + "\n";
             }
-            if(item.itemId === "Coins"){
-                coinPrice = "" + item.price.value + " " + item.price.currency;
-            }
-            if(item.itemId === "RemoveAds"){
-                adsPrice = "" + item.price.value + " " + item.price.currency;
-            }
-            productDetails = productDetails + item.title + ": " + item.description + "\n";
         }
-        return [proPrice, coinPrice, adsPrice, productDetails];
+        return productDetails;
     } catch (error) {
         console.error("Error:", error.message);
-        return [proPrice, coinPrice, adsPrice, productDetails];
+        return productDetails;
     }
 }
 

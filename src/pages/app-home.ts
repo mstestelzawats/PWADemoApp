@@ -29,10 +29,6 @@ export class AppHome extends LitElement {
   @state() coin = false;
   @state() ads = false;;
 
-  @state() proPrice = "";
-  @state() coinPrice = "";
-  @state() adsPrice = "";
-
   @state() proTitle = "";
   @state() proMessage = "";
   @state() coinTitle = "";
@@ -40,22 +36,14 @@ export class AppHome extends LitElement {
   @state() adsTitle = "";
   @state() adsMessage = "";
 
-  @state() productDetails = "";
+  @state() productDetails: string = "";
 
   @state() coinPile = 0;
 
   // Add the functions I want to call on page render
   async connectedCallback(){
     super.connectedCallback();
-    const detailVals = await GetDetails(); //this.proPrice, this.coinPrice, this.adsPrice, this.productDetails
-    if(detailVals)
-    {
-      this.proPrice = detailVals[0];
-      this.coinPrice = detailVals[1];
-      this.adsPrice = detailVals[2];
-      this.productDetails = detailVals[3];
-    }
-
+    this.productDetails = await GetDetails(); //this.proPrice, this.coinPrice, this.adsPrice, this.productDetails
     const vals = await UpdatePurchases();
     if(vals)
     {
@@ -229,9 +217,6 @@ export class AppHome extends LitElement {
       <div class="item">
         <button type="button" class="primary" @click="${() => {this.BuyPro();}}">Buy Pro</button>
       </div>
-      <div class="item">
-        <p>${this.proPrice}</p>
-      </div>
     </div>
 
     <div class="parent">
@@ -241,9 +226,6 @@ export class AppHome extends LitElement {
       </div>
       <div class="item">
         <button type="button" class="primary" @click="${() => {this.BuyCoins();}}">Buy Coins</button>
-      </div>
-      <div class="item">
-        <p>${this.coinPrice}</p>
       </div>
       <div class="item">
         <button type="button" class="secondary" @click="${async () => {
@@ -273,9 +255,6 @@ export class AppHome extends LitElement {
       </div>
       <div class="item">
         <button type="button" class="primary" @click="${() => {this.BuyAds();}}">Remove Ads</button>
-      </div>
-      <div class="item">
-        <p>${this.adsPrice}</p>
       </div>
     </div>
     <p></p>
