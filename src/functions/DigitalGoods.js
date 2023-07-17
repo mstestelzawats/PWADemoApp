@@ -13,6 +13,8 @@ export async function DigitalGoodsPurchase(IAPToken) {
         }]);
         const response = await request.show();
         alert(items[0].title + " purchase successful!");
+        await response.complete();
+        return;
     } catch (error) {
         console.error("Error:", error.message);
         return;
