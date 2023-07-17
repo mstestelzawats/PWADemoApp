@@ -249,7 +249,7 @@ export class AppHome extends LitElement {
         <button type="button" class="secondary" @click="${async () => {
           if(await UseCoins()){
             this.coin = false;
-            this.coinPile++;
+            this.coinPile = this.coinPile + 5;
           }
           this.UpdateTitlesAndMessages();
         }}">Add coins to pile</button>
