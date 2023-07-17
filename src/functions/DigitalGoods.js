@@ -12,8 +12,8 @@ export async function DigitalGoodsPurchase(IAPToken) {
             data: { itemId: items[0].itemId },
         }]);
         const response = await request.show();
-        alert(items[0].title + " purchase successful!");
         await response.complete();
+        alert(items[0].title + " purchase successful!");
         return;
     } catch (error) {
         console.error("Error:", error.message);
