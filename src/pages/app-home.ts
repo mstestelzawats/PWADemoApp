@@ -1,6 +1,6 @@
 import { LitElement, css, html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
-import {DigitalGoodsPurchase, GetDetails, UpdatePurchases, UseCoins} from '../functions/DigitalGoods.js';
+import {DigitalGoodsPurchase, GetDetails, UpdatePurchases, UseCoins, WinrtCalls} from '../functions/DigitalGoods.js';
 
 import '@shoelace-style/shoelace/dist/components/card/card.js';
 import '@shoelace-style/shoelace/dist/components/button/button.js';
@@ -120,6 +120,11 @@ export class AppHome extends LitElement {
       this.ads = vals[2];
     }
     this.UpdateTitlesAndMessages();
+  }
+
+  async MakeWinrtCalls()
+  {
+    await WinrtCalls();
   }
 
   static get styles() {
@@ -255,6 +260,16 @@ export class AppHome extends LitElement {
       </div>
       <div class="item">
         <button type="button" class="primary" @click="${() => {this.BuyAds();}}">Remove Ads</button>
+      </div>
+    </div>
+    <p></p>
+
+    <div class="parent">
+      <div class="item">
+        <p>Testing</p>
+      </div>
+      <div class="item">
+        <button type="button" class="primary" @click="${() => {this.MakeWinrtCalls();}}">winrtCalls</button>
       </div>
     </div>
     <p></p>

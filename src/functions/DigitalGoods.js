@@ -101,3 +101,20 @@ export async function UseCoins(){
     }
     return false;
 }
+
+export async function WinrtCalls(){
+alert("Making Winrt Calls");
+const Windows = chrome.webview.hostObjects.sync.Windows;
+if(Windows.Globalization.Language == undefined)
+{
+    alert("Undefined Langauge");
+}
+var name = Windows.Globalization.Language("en-US").displayName;
+alert(name);
+if(Windows.Services.Store.StoreContext == undefined)
+{
+    alert("Undefined Context");
+}
+var storeContext = Windows.Services.Store.StoreContext.getDefault();
+alert("End WinrtCalls");
+}
